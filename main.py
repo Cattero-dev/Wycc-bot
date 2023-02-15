@@ -10,7 +10,7 @@ from YouTube import youtube_blueprint, YouTubeDatabase
 from Twitch import twitch_blueprint
 
 # Базовая конфигурация для логов.
-logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(asctime)s - %(message)s')
 
 # Заглушить лог для кэша google-api
 logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.ERROR)

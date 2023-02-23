@@ -1,6 +1,5 @@
 import asyncio
 import logging
-from threading import Thread
 
 from quart import Quart
 
@@ -10,11 +9,10 @@ from YouTube import youtube_blueprint, YouTubeDatabase
 from Twitch import twitch_blueprint
 
 # Базовая конфигурация для логов.
-logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(asctime)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s - %(message)s')
 
 # Заглушить лог для кэша google-api
-logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.ERROR)
-
+# logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.ERROR)
 
 # Запустить quart
 app = Quart(__name__)
@@ -33,9 +31,8 @@ async def on_start():
     await YouTubeDatabase.init_video_table()
     # Инициализировать базу данных для постов ВК
     await VKDatabase.init_posts_table()
-
     # Задача на фоне для проверки ВК
-    app.add_background_task(VKGroup.notify_activities, telegram_bot, 60)
+    app.add_background_task(VKGroup.notify_activities, telegram_bot, 300)
 
 
 @app.after_serving

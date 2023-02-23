@@ -3,6 +3,7 @@ import os
 
 from Database import Database
 
+
 class VKDatabase:
     """
     Класс для работы с таблицей и данными для постов ВК.

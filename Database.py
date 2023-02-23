@@ -37,6 +37,10 @@ class Database:
 
     def execute(self, query: str, params: tuple = ()) -> list:
         try:
+            # В случае если коннект оборвался, то выполнить его заново
+            if not self.connection.is_connected():
+                self.connection.reconnect(attempts=3, delay=5)
+
             # Получаем курсор для выполнения запросов
             cursor = self.connection.cursor()
             # Выполняем запрос

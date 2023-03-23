@@ -66,9 +66,7 @@ async def youtube_resubscribe():
         'hub.verify': 'async',
         'hub.verify_token': os.environ["RESUB_TOKEN"]
     })
-    feed = feedparser.parse(response.text)
-
-    if feed.status == 200 and feed.entries[0].title == 'Verification Request Succeeded':
-        logging.debug("Subscription to hub extended.")
+    if response.status_code == 202 or response.status_code == 204:
+        logging.debug("Subscribed to youtube topic for videos.")
     else:
-        logging.error(f"Error subscribing to the topic")
+        logging.debug("Subscription error!")
